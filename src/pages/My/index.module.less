@@ -1,0 +1,23 @@
+@list: ~'at-list';
+
+.container {
+  .userInfo {
+    :global {
+      .@{list}__item-container {
+        height: 100px;
+  
+        .@{list}__item-thumb {
+          width: 100px;
+          height: 100px;
+          border-radius: 15px;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+
+  .actList {
+    margin-top: 10px;
+  }
+  
+}
