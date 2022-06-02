@@ -1,23 +1,58 @@
 @list: ~'at-list';
 
 .container {
-  .userInfo {
-    :global {
-      .@{list}__item-container {
-        height: 100px;
-  
-        .@{list}__item-thumb {
-          width: 100px;
-          height: 100px;
-          border-radius: 15px;
-          overflow: hidden;
-        }
+  padding-top: 2px * 2;
+  .userInfoContent {
+    background-color: #fff;
+    padding: 0 22px * 2;
+
+    .userInfoDesc {
+      padding-top: 8px * 2;
+    }
+
+    .userInfoText {
+      color: #505050;
+      font-size: 12px * 2;
+      line-height: 150%;
+
+      &.username {
+        font-size: 16px * 2;
+        margin-bottom: 3px * 2;
+        line-height: 150%;
       }
     }
   }
 
-  .actList {
-    margin-top: 10px;
+  .userInfoMes {
+    margin-left: 12px * 2;
   }
-  
+
+  .memberInfo {
+    padding: 11px * 2;
+    margin-top: 29px * 2;
+    color: #ffedc4;
+    line-height: 150%;
+    font-size: 14px * 2;
+    background-color: #252525;
+    border-radius: 11px * 2 11px * 2 0 0;
+    box-sizing: border-box;
+
+    .right {
+      display: flex;
+      font-size: 12px * 2;
+
+      .open {
+        display: inline-block;
+        height: 23px * 2;
+        background-color: #ffedc4;
+        color: #505050;
+        line-height: 100%;
+        font-size: 12px * 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px * 2;
+      }
+    }
+  }
 }
