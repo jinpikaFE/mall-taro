@@ -1,8 +1,59 @@
-.container{
-    // background: url("");
-    .avatar {
-        display: flex;
-        justify-content: center;
-        margin-top: 64px * 2;
+.container {
+  background-color: #fbfbfb;
+  height: 100vh;
+
+  .formContainer {
+    background-color: #fff;
+    border: 1px solid rgba(80, 80, 80, 0.1);
+  }
+
+  .avatar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px * 2;
+    padding-top: 64px * 2;
+  }
+
+  .inputItem {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: 0 10px * 2;
+    margin-left: 20px * 2;
+
+    &:first-child {
+      border-bottom: 1px solid rgba(80, 80, 80, 0.2);
     }
+  }
+
+  .loginBtn {
+    background-color: #f97f7e;
+    color: #ffffff;
+    width: 90%;
+    margin-top: 15px * 2;
+  }
+
+  .wxLogin {
+    font-size: 12px * 2;
+    line-height: 150%;
+    color: #505050;
+    margin-top: 190px * 2;
+    text-align: center;
+  }
+
+  .wxIcon {
+    margin: 0 auto;
+  }
+
+  .toolbar {
+    margin-top: 30px * 2;
+
+    color: #449dff;
+    font-size: 14px * 2;
+
+    .divider {
+      padding: 0 11px * 2;
+    }
+  }
 }
