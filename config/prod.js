@@ -1,5 +1,6 @@
 export const env = {
-  NODE_ENV: '"production"'
+  NODE_ENV: '"production"',
+  BASE_URL: '"http://127.0.0.1:8081"',
 };
 export const defineConstants = {};
 export const mini = {};

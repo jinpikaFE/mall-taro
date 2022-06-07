@@ -1,3 +1,4 @@
+import { localUser } from '@/store/user';
 import { View, Text, ScrollView } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { Observer } from 'mobx-react';
@@ -22,6 +23,16 @@ const Index: Taro.FC = () => {
                 <View className={`${styles.userInfoText} ${styles.isVip}`}>
                   非会员
                 </View>
+                {!localUser.userInfo && (
+                  <View
+                    className={`${styles.userInfoText}`}
+                    onClick={() =>
+                      Taro.navigateTo({ url: '/pages/Login/index' })
+                    }
+                  >
+                    未登录
+                  </View>
+                )}
               </View>
             </View>
             <View

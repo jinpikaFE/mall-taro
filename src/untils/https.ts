@@ -1,6 +1,4 @@
-import Taro from '@tarojs/taro'
-import configStore from '@/models'
-import Auth from '@/interceptor/authorize'
+import Taro from '@tarojs/taro';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -23,13 +21,20 @@ const codeMessage = {
 /**
  * 异常处理程序
  */
-const errorHandler = (response: any): Response => {
+const errorHandler = (response: any) => {
   if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     Taro.showToast({
       title: errorText,
       icon: 'none',
-    })
+    });
+  }
+
+  if (response?.errMsg) {
+    Taro.showToast({
+      title: response?.errMsg,
+      icon: 'none',
+    });
   }
 };
 /**
@@ -37,60 +42,54 @@ const errorHandler = (response: any): Response => {
  * @param path
  */
 const getUrl = (path) => {
-  const state = configStore.getState();
-  // 判断如原URL以http开头，为识别为自定义地址，就不使用全局base url 进行拼接
-  return path.indexOf('http') > -1 ? path : `${state.common.baseApiUrl}${path}`
-}
+  switch (process.env.TARO_ENV) {
+    case 'h5':
+      return path;
+    case 'weapp':
+      return `${process.env.BASE_URL}${path}`;
+    default:
+      return path;
+  }
+};
 
 /**
  *
  * @param path
  * @param options
  */
-async function request(path: any, options: any = {}) {
+async function request<T>(path: any, options: any = {}): Promise<T | null> {
   let authorization = null;
   // 是否要受权
   if (options && options.authorize !== false) {
-    await Auth.run();
-    authorization = Auth.get().accessToken;
+    // await Auth.run();
+    // authorization = Auth.get().accessToken;
   }
+
   const opt = {
     url: getUrl(path),
     data: options.params || options.data,
     header: {
-      'content-type': 'application/json',
       ...options.header,
       authorization,
     },
-    method: options.method,
-    dataType: options.dataType,
-    responseType: options.responseType,
+    ...options,
   };
   // 抽离成公共方法
   const awaitWrap = (promise) => {
-    return promise
-      .then(data => [ null, data ])
-      .catch(err => [ err, null ])
-  }
+    return promise.then((data) => [null, data]).catch((err) => [err, null]);
+  };
   // 执行请求
-  const [ err, data ] = await awaitWrap(Taro.request(opt))
+  const [err, data] = await awaitWrap(Taro.request(opt));
+
+  console.log(err, data);
+
   // 返回是否错误
   if (err) {
-    Taro.logger.error('request <==', JSON.stringify(err));
-    errorHandler(err)
-    throw new Error(err)
+    errorHandler(err);
+    return null;
   }
   // 返回 promise
-  return new Promise((resolve, reject) => {
-    if (options.callback && typeof options.callback === 'function') {
-      options.callback(data);
-    } else if (options.callback === false) {
-      // 在这里执行全局回调
-      resolve(data);
-    } else {
-      resolve(data.data);
-    }
-  })
+  return Promise.resolve(data);
 }
 
 export default request;
