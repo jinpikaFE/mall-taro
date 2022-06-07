@@ -1,24 +1,18 @@
 import { localUser } from '@/store/user';
-import { Button, Input, View, Text } from '@tarojs/components';
+import { AppTypeEnum } from '@/typing/constants';
+import { Button, View, Text } from '@tarojs/components';
 import Taro, { FC } from '@tarojs/taro';
-import { useSetState } from 'ahooks';
 import { Observer } from 'mobx-react';
-import Form, { Field, useForm, FormProvider } from 'rc-field-form';
-import { AtAvatar, AtButton, AtForm, AtIcon, AtInput } from 'taro-ui';
+import Form, { Field, useForm } from 'rc-field-form';
+import { AtAvatar, AtIcon, AtInput } from 'taro-ui';
 
 import styles from './index.module.less';
 
 const Login: FC = () => {
   const [form] = useForm();
-  const [formValues, setFormValues] = useSetState<Record<string, any>>({
-    username: '',
-    password: '',
-  });
 
-  const handleChange = (value, valueName: string) => {
-    setFormValues({
-      [valueName]: value,
-    });
+  const onWxClick = () => {    
+    localUser.signin({ type: AppTypeEnum.WEAPP });
   };
 
   return (
@@ -101,17 +95,22 @@ const Login: FC = () => {
             <Text>遇到问题</Text>
           </View>
 
-          <View className={`at-row at-row__justify--center ${styles.wxLogin}`}>
-            <View>
-              <AtAvatar
-                size="small"
-                className={styles.wxIcon}
-                image="https://jinpika-1308276765.cos.ap-shanghai.myqcloud.com/images/%E5%BE%AE%E4%BF%A1.svg"
-                circle
-              />
-              微信登录
+          {process.env.TARO_ENV === 'weapp' && (
+            <View
+              className={`at-row at-row__justify--center ${styles.wxLogin}`}
+              onClick={onWxClick}
+            >
+              <View>
+                <AtAvatar
+                  size="small"
+                  className={styles.wxIcon}
+                  image="https://jinpika-1308276765.cos.ap-shanghai.myqcloud.com/images/%E5%BE%AE%E4%BF%A1.svg"
+                  circle
+                />
+                微信登录
+              </View>
             </View>
-          </View>
+          )}
         </View>
       )}
     </Observer>

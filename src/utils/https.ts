@@ -1,4 +1,5 @@
 import Taro from '@tarojs/taro';
+import { storage } from './Storage';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -58,11 +59,11 @@ const getUrl = (path) => {
  * @param options
  */
 async function request<T>(path: any, options: any = {}): Promise<T | null> {
-  let authorization = null;
+  let authorization: string | null = null;
   // 是否要受权
-  if (options && options.authorize !== false) {
+  if (options.authorize) {
     // await Auth.run();
-    // authorization = Auth.get().accessToken;
+    authorization = `Bearer ${storage.get('token')}`;
   }
 
   const opt = {
@@ -89,7 +90,7 @@ async function request<T>(path: any, options: any = {}): Promise<T | null> {
     return null;
   }
   // 返回 promise
-  return Promise.resolve(data);
+  return Promise.resolve(data?.data);
 }
 
 export default request;

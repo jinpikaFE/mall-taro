@@ -1,12 +1,20 @@
 import { localUser } from '@/store/user';
+import { storage } from '@/utils/Storage';
 import { View, Text, ScrollView } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { Observer } from 'mobx-react';
+import { useEffect, useState } from 'react';
 import { AtAvatar, AtButton, AtCard } from 'taro-ui';
 
 import styles from './index.module.less';
 
 const Index: Taro.FC = () => {
+  useEffect(() => {
+    if (!storage.get('token')) {
+      Taro.navigateTo({ url: '/pages/Login/index' });
+    }
+  }, []);
+
   return (
     <Observer>
       {() => (
@@ -17,21 +25,26 @@ const Index: Taro.FC = () => {
             >
               <AtAvatar size="small" circle />
               <View className={styles.userInfoMes}>
-                <View className={`${styles.userInfoText} ${styles.username}`}>
-                  用户名
-                </View>
-                <View className={`${styles.userInfoText} ${styles.isVip}`}>
-                  非会员
-                </View>
-                {!localUser.userInfo && (
+                {!localUser?.userInfo ? (
                   <View
-                    className={`${styles.userInfoText}`}
+                    className={`${styles.username}`}
                     onClick={() =>
                       Taro.navigateTo({ url: '/pages/Login/index' })
                     }
                   >
                     未登录
                   </View>
+                ) : (
+                  <>
+                    <View
+                      className={`${styles.userInfoText} ${styles.username}`}
+                    >
+                      {localUser?.userInfo?.username}
+                    </View>
+                    <View className={`${styles.userInfoText} ${styles.isVip}`}>
+                      非会员
+                    </View>
+                  </>
                 )}
               </View>
             </View>

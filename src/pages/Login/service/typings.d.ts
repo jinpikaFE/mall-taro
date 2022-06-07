@@ -1,6 +1,11 @@
 declare namespace NLogin {
   /** 登录实体 */
-  type LoginEntity = Pick<NUser.UserEntity, 'username' | 'password' | 'mobile'>;
+  type LoginEntity<AppTypeEnum> = Pick<
+    NUser.UserEntity,
+    'username' | 'password' | 'mobile'
+  > & {
+    type?: AppTypeEnum;
+  };
 }
 
 declare namespace NUser {
@@ -9,8 +14,11 @@ declare namespace NUser {
     username?: string;
     password?: string;
     mobile?: string;
-    avatar?: string;
-    gender?: string;
-    nickname?: string;
+    avatarUrl?: string;
+    gender?: number;
+    nickName?: string;
+    province?: string;
+    country?: string;
+    city?: string;
   };
 }
