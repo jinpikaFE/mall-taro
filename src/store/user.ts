@@ -1,6 +1,6 @@
 import { getMyUserInfo, setUser } from '@/pages/global/service';
 import { loginApi } from '@/pages/Login/service';
-import { AppTypeEnum } from '@/typing/constants';
+import { AppTypeEnum, LoginTypeEnum, MiniConfig } from '@/typing/constants';
 import { storage } from '@/utils/Storage';
 import Taro, { UserInfo } from '@tarojs/taro';
 import { makeAutoObservable } from 'mobx';
@@ -22,6 +22,7 @@ class User {
       const res = await loginApi({
         username,
         password,
+        loginType: LoginTypeEnum.ACCOUNT,
       });
       if (res) {
         storage.set('token', res?.data);
@@ -37,22 +38,21 @@ class User {
 
     if (type === AppTypeEnum.WEAPP) {
       Taro.login({
-        success: function (res) {
+        success: async (res) => {
           console.log(res);
-          
+
           if (res.code) {
-            // //发起网络请求
-            // Taro.request({
-            //   url: 'https://test.com/onLogin',
-            //   data: {
-            //     code: res.code
-            //   }
-            // })
+            const loginres = await loginApi({
+              appid: MiniConfig.APPID,
+              appsecret: MiniConfig.APP_SECRET,
+              code: res?.code,
+              loginType: LoginTypeEnum.WX,
+            });
           } else {
-            console.log('登录失败！' + res.errMsg)
+            console.log('登录失败！' + res.errMsg);
           }
-        }
-      })
+        },
+      });
     }
   };
 }
