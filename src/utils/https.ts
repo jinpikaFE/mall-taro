@@ -89,6 +89,14 @@ async function request<T>(path: any, options: any = {}): Promise<T | null> {
     errorHandler(err);
     return null;
   }
+
+  if (data?.data?.code !== 200) {
+    Taro.showToast({
+      title: data?.data?.message,
+      icon: 'none',
+    });
+    return null;
+  }
   // 返回 promise
   return Promise.resolve(data?.data);
 }
