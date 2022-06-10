@@ -39,7 +39,7 @@ const Index: Taro.FC = () => {
                     <View
                       className={`${styles.userInfoText} ${styles.username}`}
                     >
-                      {localUser?.userInfo?.username}
+                      {localUser?.userInfo?.nickName}
                     </View>
                     <View className={`${styles.userInfoText} ${styles.isVip}`}>
                       非会员

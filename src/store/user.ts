@@ -25,7 +25,7 @@ class User {
         loginType: LoginTypeEnum.ACCOUNT,
       });
       if (res) {
-        storage.set('token', res?.data);
+        storage.set('token', res?.data?.token);
         const resUser = await getMyUserInfo({ username });
         if (resUser) {
           storage.set('user', resUser?.data);
@@ -48,6 +48,18 @@ class User {
               code: res?.code,
               loginType: LoginTypeEnum.WX,
             });
+            if (loginres) {
+              storage.set('token', loginres?.data?.token);
+              const resUser = await getMyUserInfo({
+                openid: loginres?.data?.openid,
+              });
+              if (resUser) {
+                storage.set('user', resUser?.data);
+                this.userInfo = resUser?.data;
+                Taro.switchTab({ url: '/pages/My/index' });
+                // window.location.reload();
+              }
+            }
           } else {
             console.log('登录失败！' + res.errMsg);
           }
