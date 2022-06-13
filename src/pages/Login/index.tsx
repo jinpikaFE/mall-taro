@@ -85,9 +85,13 @@ const Login: FC = () => {
                           const res = await getCaptcha({
                             mobile: form.getFieldValue('mobile'),
                           });
-                          // if (res) {
-
-                          // }
+                          if (res) {
+                            Taro.showToast({
+                              title: "获取成功",
+                              icon: 'success',
+                              duration: 2000,
+                            });
+                          }
                         }}
                         disabled={isCaptchaBtnDisabled || countdown !== 0}
                       >
