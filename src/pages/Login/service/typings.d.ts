@@ -2,13 +2,14 @@ declare namespace NLogin {
   /** 登录实体 */
   type LoginEntity<AppTypeEnum> = Pick<
     NUser.UserEntity,
-    'username' | 'password'
+    'username' | 'password' | 'mobile'
   > & {
     type?: AppTypeEnum;
-    loginType: '1' | '2';
+    loginType?: '1' | '2' | '3';
     appid?: string;
     appsecret?: string;
     code?: string;
+    captcha?: string;
   };
 }
 

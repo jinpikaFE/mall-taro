@@ -32,7 +32,7 @@ const Index: Taro.FC = () => {
                       Taro.navigateTo({ url: '/pages/Login/index' })
                     }
                   >
-                    未登录
+                    立即登录
                   </View>
                 ) : (
                   <>

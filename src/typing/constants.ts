@@ -7,6 +7,7 @@ export enum AppTypeEnum {
 export enum LoginTypeEnum {
   ACCOUNT = '1',
   WX = '2',
+  MOBILE = '3',
 }
 
 export const MiniConfig = {

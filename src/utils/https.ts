@@ -86,11 +86,13 @@ async function request<T>(path: any, options: any = {}): Promise<T | null> {
 
   // 返回是否错误
   if (err) {
+    Taro.hideLoading()
     errorHandler(err);
     return null;
   }
 
   if (data?.data?.code !== 200) {
+    Taro.hideLoading()
     Taro.showToast({
       title: data?.data?.message,
       icon: 'none',

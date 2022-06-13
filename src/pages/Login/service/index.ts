@@ -8,3 +8,11 @@ export const loginApi = (data: NLogin.LoginEntity<AppTypeEnum>) => {
     data,
   });
 };
+
+/** 获取短信验证码 */
+export const getCaptcha = (data: { mobile: string }) => {
+  return request<TResult>(`/v1/captcha`, {
+    method: 'post',
+    data,
+  });
+};

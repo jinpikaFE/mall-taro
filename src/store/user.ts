@@ -12,26 +12,29 @@ class User {
   }
 
   signin = async ({
-    username,
-    password,
+    mobile,
+    captcha,
     type = AppTypeEnum.H5,
   }: NLogin.LoginEntity<AppTypeEnum>) => {
-    console.log(type);
+    Taro.showLoading({
+      title: '登录中',
+    });
 
     if (type === AppTypeEnum.H5) {
       const res = await loginApi({
-        username,
-        password,
-        loginType: LoginTypeEnum.ACCOUNT,
+        mobile,
+        captcha,
+        loginType: LoginTypeEnum.MOBILE,
       });
       if (res) {
         storage.set('token', res?.data?.token);
-        const resUser = await getMyUserInfo({ username });
+        const resUser = await getMyUserInfo({ mobile });
         if (resUser) {
           storage.set('user', resUser?.data);
           this.userInfo = resUser?.data;
           Taro.switchTab({ url: '/pages/My/index' });
           // window.location.reload();
+          Taro.hideLoading();
         }
       }
     }
@@ -58,9 +61,11 @@ class User {
                 this.userInfo = resUser?.data;
                 Taro.switchTab({ url: '/pages/My/index' });
                 // window.location.reload();
+                Taro.hideLoading();
               }
             }
           } else {
+            Taro.hideLoading();
             console.log('登录失败！' + res.errMsg);
           }
         },
