@@ -21,6 +21,11 @@ const Index: Taro.FC = () => {
         <View className={styles.container}>
           <View className={`${styles.userInfoContent}`}>
             <View
+              onClick={() => {
+                if (localUser?.userInfo) {
+                  Taro.navigateTo({ url: '/pages/My/UserInfo/index' });
+                }
+              }}
               className={`at-row at-row__justify--start ${styles.userInfoDesc}`}
             >
               <AtAvatar size="small" circle />

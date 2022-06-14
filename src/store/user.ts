@@ -1,4 +1,4 @@
-import { getMyUserInfo, setUser } from '@/pages/global/service';
+import { getMyUserInfo } from '@/pages/global/service';
 import { loginApi } from '@/pages/Login/service';
 import { AppTypeEnum, LoginTypeEnum, MiniConfig } from '@/typing/constants';
 import { storage } from '@/utils/Storage';
