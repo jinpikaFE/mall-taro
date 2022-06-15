@@ -1,3 +1,5 @@
+@import '~@/theme/index.less';
+
 .container {
   background-color: #fbfbfb;
   box-sizing: border-box;
@@ -17,5 +19,24 @@
     text-align: center;
     font-size: 16px * 2;
     margin: 10px * 2 0 30px * 2;
+  }
+
+  .signoutBtn {
+    margin: 40px *2 30px * 2 0;
+    background-color: @theme-functional-negative-text;
+    color: #fbfbfb;
+  }
+
+  :global {
+    .at-list__item-content {
+      width: 20%;
+      flex: none;
+    }
+
+    .at-list__item-extra {
+      display: flex;
+      width: 80%;
+      max-width: none;
+    }
   }
 }

@@ -24,6 +24,8 @@ const codeMessage = {
  */
 const errorHandler = (response: any) => {
   if (response && response.status) {
+    console.log(response.json());
+    
     const errorText = codeMessage[response.status] || response.statusText;
     Taro.showToast({
       title: errorText,

@@ -1,15 +1,16 @@
 import { uploadUser } from '@/pages/global/service';
 import { localUser } from '@/store/user';
 import { storage } from '@/utils/Storage';
-import { View, Image } from '@tarojs/components';
+import { View, Image, Picker } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { Observer } from 'mobx-react';
-import { useEffect, useState } from 'react';
-import { AtList, AtListItem } from 'taro-ui';
+import { useState } from 'react';
+import { AtButton, AtList, AtListItem } from 'taro-ui';
 
 import styles from './index.module.less';
 
 const UserInfo: Taro.FC = () => {
+  const [userGender, setUserGender] = useState(localUser?.userInfo?.gender);
   const onClickSkip = (url: string) => {
     Taro.navigateTo({ url: '/pages/WebView/Blog' });
   };
@@ -49,10 +50,38 @@ const UserInfo: Taro.FC = () => {
     });
   };
 
-  useEffect(()=>{
-    console.log(localUser?.userInfo?.avatarUrl);
-    
-  },[])
+  const onClickSignout = () => {
+    storage.clear();
+    localUser.clearUserInfo();
+    Taro.navigateTo({ url: '/pages/Login/index' });
+  };
+
+  const renderGender = (): string => {
+    switch (+(userGender || '0')) {
+      case 1:
+        return '男';
+      case 2:
+        return '女';
+      default:
+        return '未知';
+    }
+  };
+
+  const onChangeGender = async (e) => {
+    const upUserRes = await uploadUser({
+      id: localUser.userInfo.id,
+      gender: e.detail.value?.toString(),
+    });
+    if (upUserRes) {
+      localUser.setUserInfo({ gender: e.detail.value?.toString() });
+      setUserGender(e.detail.value);
+      Taro.showToast({
+        title: '更新成功',
+        icon: 'success',
+        duration: 2000,
+      });
+    }
+  };
 
   return (
     <Observer>
@@ -69,11 +98,57 @@ const UserInfo: Taro.FC = () => {
             更换头像
           </View>
           <AtList>
-            <AtListItem title="Avator" arrow="right" />
-            <AtListItem title="NickName" arrow="right" />
-            <AtListItem title="Gender" arrow="right" />
-            <AtListItem title="Signature" arrow="right" />
+            <AtListItem
+              title="昵称"
+              arrow="right"
+              extraText={localUser.userInfo.nickName || ''}
+              onClick={() =>
+                Taro.navigateTo({
+                  url: '/pages/My/UserInfo/UpdateUserInfo/index?formItem=nickName',
+                })
+              }
+            />
+            <Picker
+              mode="selector"
+              range={['未知', '男', '女']}
+              value={userGender}
+              onChange={onChangeGender}
+            >
+              <AtListItem
+                title="性别"
+                arrow="right"
+                extraText={renderGender()}
+              />
+            </Picker>
+            <AtListItem
+              title="手机号"
+              arrow="right"
+              extraText={localUser.userInfo.mobile || ''}
+              onClick={() =>
+                Taro.navigateTo({
+                  url: '/pages/My/UserInfo/UpdateUserInfo/index?formItem=mobile',
+                })
+              }
+            />
+            <AtListItem
+              title="微信"
+              arrow="right"
+              extraText={localUser.userInfo.openid ? '已绑定' : '未绑定'}
+            />
+            <AtListItem
+              title="所在地"
+              arrow="right"
+              extraText={localUser?.userInfo?.province || ''}
+              onClick={() =>
+                Taro.navigateTo({
+                  url: '/pages/My/UserInfo/UpdateUserInfo/index?formItem=local',
+                })
+              }
+            />
           </AtList>
+          <AtButton className={styles.signoutBtn} onClick={onClickSignout}>
+            退出登录
+          </AtButton>
         </View>
       )}
     </Observer>

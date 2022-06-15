@@ -3,6 +3,7 @@ export default {
     'pages/index/index',
     'pages/My/index',
     'pages/My/UserInfo/index',
+    'pages/My/UserInfo/UpdateUserInfo/index',
     'pages/WebView/index',
     'pages/Login/index',
   ],

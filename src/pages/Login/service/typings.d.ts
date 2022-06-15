@@ -21,7 +21,7 @@ declare namespace NUser {
     password?: string;
     mobile?: string;
     avatarUrl?: string;
-    gender?: number;
+    gender?: string | number;
     nickName?: string;
     province?: string;
     country?: string;

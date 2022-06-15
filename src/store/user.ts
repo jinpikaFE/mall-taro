@@ -8,8 +8,6 @@ import { makeAutoObservable } from 'mobx';
 class User {
   userInfo: Partial<UserInfo> & NUser.UserEntity = storage.get('user') || null;
   constructor() {
-    console.log(storage.get('user'));
-
     makeAutoObservable(this);
   }
 
@@ -74,9 +72,13 @@ class User {
     }
   };
 
-  setUserInfo = (newUserInfo) => {
+  setUserInfo = (newUserInfo: Partial<UserInfo> & NUser.UserEntity) => {
     this.userInfo = { ...this.userInfo, ...newUserInfo };
     storage.set('user', this.userInfo);
+  };
+
+  clearUserInfo = () => {
+    this.userInfo = {};
   };
 }
 export const localUser = new User();
