@@ -1,6 +1,7 @@
 export const env = {
   NODE_ENV: '"production"',
-  BASE_URL: '"http://mall_fiber.jinxinapp.cn"',
+  BASE_URL: '"http://127.0.0.1:8081"',
+  // BASE_URL: '"http://mall.jinxinapp.cn"',
 };
 export const defineConstants = {};
 export const mini = {};

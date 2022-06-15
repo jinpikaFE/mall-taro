@@ -1,9 +1,11 @@
+import { uploadUser } from '@/pages/global/service';
 import { localUser } from '@/store/user';
-import { Input, View, Image } from '@tarojs/components';
+import { storage } from '@/utils/Storage';
+import { View, Image } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { Observer } from 'mobx-react';
-import { useState } from 'react';
-import { AtAvatar, AtList, AtListItem } from 'taro-ui';
+import { useEffect, useState } from 'react';
+import { AtList, AtListItem } from 'taro-ui';
 
 import styles from './index.module.less';
 
@@ -12,43 +14,54 @@ const UserInfo: Taro.FC = () => {
     Taro.navigateTo({ url: '/pages/WebView/Blog' });
   };
 
-  const [url, setUrl] = useState('');
-
   const onClickUpload = () => {
     Taro.chooseImage({
       count: 1, // 默认9
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera', 'user'], // 可以指定来源是相册还是相机，默认二者都有，在H5浏览器端支持使用 `user` 和 `environment`分别指定为前后摄像头
       success: function (res) {
-        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        // 针对小程序/h5进行兼容处理
-        // 小程序
-        if (process.env.TARO_ENV === 'weapp') {
-          let base64 =
-            'data:image/png;base64,' +
-            Taro.getFileSystemManager().readFileSync(
-              res.tempFilePaths?.[0],
-              'base64',
-            );
-          setUrl(base64);
-        }
-
-        if (process.env.TARO_ENV === 'h5') {
-          setUrl(res.tempFilePaths?.[0]);
-          console.log(res);
-        }
+        Taro.uploadFile({
+          url: `${process.env.BASE_URL}/v1/upload`, //仅为示例，非真实的接口地址
+          filePath: res.tempFilePaths[0],
+          name: 'file',
+          header: {
+            Authorization: `Bearer ${storage.get('token')}`,
+          },
+          fileName: `${new Date().getTime()}.png`,
+          success: async (resUp) => {
+            console.log(resUp);
+            const url = JSON.parse(resUp?.data)?.data?.url;
+            const upUserRes = await uploadUser({
+              id: localUser.userInfo.id,
+              avatarUrl: url,
+            });
+            if (upUserRes) {
+              localUser.setUserInfo({ avatarUrl: url });
+              Taro.showToast({
+                title: '更新成功',
+                icon: 'success',
+                duration: 2000,
+              });
+            }
+          },
+        });
       },
     });
   };
+
+  useEffect(()=>{
+    console.log(localUser?.userInfo?.avatarUrl);
+    
+  },[])
 
   return (
     <Observer>
       {() => (
         <View className={styles.container}>
-          <View className={styles.avatar}>
+          <View className={styles.avatar} onClick={onClickUpload}>
             <Image
               style="width: 100%;height: 100%;"
-              src={url}
+              src={localUser?.userInfo?.avatarUrl || ''}
               mode="aspectFill"
             />
           </View>

@@ -16,6 +16,7 @@ declare namespace NLogin {
 declare namespace NUser {
   /** 用户实体 */
   type UserEntity = {
+    id?: number | string;
     username?: string;
     password?: string;
     mobile?: string;

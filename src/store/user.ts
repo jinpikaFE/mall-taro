@@ -8,6 +8,8 @@ import { makeAutoObservable } from 'mobx';
 class User {
   userInfo: Partial<UserInfo> & NUser.UserEntity = storage.get('user') || null;
   constructor() {
+    console.log(storage.get('user'));
+
     makeAutoObservable(this);
   }
 
@@ -57,8 +59,7 @@ class User {
                 openid: loginres?.data?.openid,
               });
               if (resUser) {
-                storage.set('user', resUser?.data);
-                this.userInfo = resUser?.data;
+                this.setUserInfo(resUser?.data);
                 Taro.switchTab({ url: '/pages/My/index' });
                 // window.location.reload();
                 Taro.hideLoading();
@@ -71,6 +72,11 @@ class User {
         },
       });
     }
+  };
+
+  setUserInfo = (newUserInfo) => {
+    this.userInfo = { ...this.userInfo, ...newUserInfo };
+    storage.set('user', this.userInfo);
   };
 }
 export const localUser = new User();

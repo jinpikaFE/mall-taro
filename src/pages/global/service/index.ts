@@ -17,3 +17,22 @@ export const setUser = (data: NUser.UserEntity) => {
     authorize: true,
   });
 };
+
+/** 更新用户 */
+export const uploadUser = (data: NUser.UserEntity) => {
+  const { id, ...otherData } = data;
+  return request<TResult>(`/v1/user/${data?.id}`, {
+    method: 'put',
+    data: otherData,
+    authorize: true,
+  });
+};
+
+/** 上传文件 */
+export const uploadFile = (data: any) => {
+  return request<TResult>(`/v1/upload`, {
+    method: 'post',
+    data,
+    authorize: true,
+  });
+};
