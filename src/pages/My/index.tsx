@@ -1,6 +1,6 @@
 import { localUser } from '@/store/user';
 import { storage } from '@/utils/Storage';
-import { View, Text, ScrollView } from '@tarojs/components';
+import { View, Text, ScrollView, Image } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { Observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
@@ -28,7 +28,13 @@ const Index: Taro.FC = () => {
               }}
               className={`at-row at-row__justify--start ${styles.userInfoDesc}`}
             >
-              <AtAvatar size="small" circle />
+              <View className={styles.avatar}>
+                <Image
+                  style="width: 100%;height: 100%;"
+                  src={localUser?.userInfo?.avatarUrl || ''}
+                  mode="aspectFill"
+                />
+              </View>
               <View className={styles.userInfoMes}>
                 {!localUser?.userInfo ? (
                   <View
