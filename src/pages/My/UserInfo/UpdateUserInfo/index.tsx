@@ -30,7 +30,7 @@ const UpdateUserInfo: FC = () => {
 
   const onChangeRegion = (e) => {
     console.log(e);
-    setWeappRegion(e?.detail?.value?.join?.('/'));
+    setWeappRegion(e?.detail?.value?.join?.(' '));
   };
 
   const onReigonChange = (e, obj: TRegionObj) => {
@@ -165,14 +165,18 @@ const UpdateUserInfo: FC = () => {
                   </Field>
                 </>
               )}
-              {router?.params?.formItem === 'local' &&
+              {/* {router?.params?.formItem === 'local' &&
                 process.env.TARO_ENV === 'h5' && (
                   <RegionPicker
                     onReigonChange={onReigonChange}
                     initialValues={[1, 2, 0]}
                   />
-                )}
-              {router?.params?.formItem === 'local' &&
+                )} */}
+              <RegionPicker
+                onReigonChange={onReigonChange}
+                initialValues={[1, 2, 0]}
+              />
+              {/* {router?.params?.formItem === 'local' &&
                 process.env.TARO_ENV === 'weapp' && (
                   <Picker
                     mode="region"
@@ -185,7 +189,7 @@ const UpdateUserInfo: FC = () => {
                       extraText={weappRegion}
                     />
                   </Picker>
-                )}
+                )} */}
             </View>
 
             <Button onClick={() => form?.submit()} className={styles.sumbitBtn}>
