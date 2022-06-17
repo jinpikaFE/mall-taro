@@ -36,3 +36,10 @@ export const uploadFile = (data: any) => {
     authorize: true,
   });
 };
+
+/** 获取省市区 */
+export const getRegion = () => {
+  return request<TResult>(`/v1/region`, {
+    method: 'get',
+  });
+};

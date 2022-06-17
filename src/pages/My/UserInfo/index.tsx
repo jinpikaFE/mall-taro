@@ -130,11 +130,13 @@ const UserInfo: Taro.FC = () => {
                 })
               }
             />
-            <AtListItem
-              title="微信"
-              arrow="right"
-              extraText={localUser.userInfo.openid ? '已绑定' : '未绑定'}
-            />
+            {process.env.TARO_ENV === 'weapp' && (
+              <AtListItem
+                title="微信"
+                arrow="right"
+                extraText={localUser.userInfo.openid ? '已绑定' : '未绑定'}
+              />
+            )}
             <AtListItem
               title="所在地"
               arrow="right"

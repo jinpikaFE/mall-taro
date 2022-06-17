@@ -1,19 +1,22 @@
-import { Button, View } from '@tarojs/components';
+import { Button, Picker, View } from '@tarojs/components';
 import { Observer } from 'mobx-react';
 import { localUser } from '@/store/user';
 import { getCaptcha } from '@/pages/Login/service';
 import Taro, { FC, useRouter } from '@tarojs/taro';
 import { useState } from 'react';
 import Form, { Field, useForm } from 'rc-field-form';
-import { AtButton, AtInput } from 'taro-ui';
+import { AtButton, AtInput, AtListItem } from 'taro-ui';
 import { useCountDown } from 'ahooks';
 import { uploadUser } from '@/pages/global/service';
+import RegionPicker, { TRegionObj } from '@/components/regionPicker';
 
 import styles from './index.module.less';
 
 const UpdateUserInfo: FC = () => {
   const [form] = useForm();
   const router = useRouter();
+
+  const [weappRegion, setWeappRegion] = useState();
 
   const [isCaptchaBtnDisabled, setIsCaptchaBtnDisabled] = useState<boolean>(
     !localUser?.userInfo?.mobile,
@@ -25,7 +28,14 @@ const UpdateUserInfo: FC = () => {
     targetDate,
   });
 
-  console.log(router?.params?.formItem);
+  const onChangeRegion = (e) => {
+    console.log(e);
+    setWeappRegion(e?.detail?.value?.join?.('/'));
+  };
+
+  const onReigonChange = (e, obj: TRegionObj) => {
+    console.log(e, obj);
+  };
 
   return (
     <Observer>
@@ -155,6 +165,27 @@ const UpdateUserInfo: FC = () => {
                   </Field>
                 </>
               )}
+              {router?.params?.formItem === 'local' &&
+                process.env.TARO_ENV === 'h5' && (
+                  <RegionPicker
+                    onReigonChange={onReigonChange}
+                    initialValues={[1, 2, 0]}
+                  />
+                )}
+              {router?.params?.formItem === 'local' &&
+                process.env.TARO_ENV === 'weapp' && (
+                  <Picker
+                    mode="region"
+                    value={['userGender']}
+                    onChange={onChangeRegion}
+                  >
+                    <AtListItem
+                      title="所在地"
+                      arrow="right"
+                      extraText={weappRegion}
+                    />
+                  </Picker>
+                )}
             </View>
 
             <Button onClick={() => form?.submit()} className={styles.sumbitBtn}>
