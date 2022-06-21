@@ -6,7 +6,7 @@ import Taro, { FC, useRouter } from '@tarojs/taro';
 import { useState } from 'react';
 import Form, { Field, useForm } from 'rc-field-form';
 import { AtButton, AtInput, AtListItem } from 'taro-ui';
-import { useCountDown } from 'ahooks';
+import { useCountDown, useSetState } from 'ahooks';
 import { uploadUser } from '@/pages/global/service';
 import RegionPicker, { TRegionObj } from '@/components/regionPicker';
 
@@ -21,6 +21,11 @@ const UpdateUserInfo: FC = () => {
   const [isCaptchaBtnDisabled, setIsCaptchaBtnDisabled] = useState<boolean>(
     !localUser?.userInfo?.mobile,
   );
+  const [regionObj, setRegionObj] = useSetState({
+    code: '',
+    index: '',
+    region: '',
+  });
 
   const [targetDate, setTargetDate] = useState<number>();
 
@@ -35,6 +40,11 @@ const UpdateUserInfo: FC = () => {
 
   const onReigonChange = (e, obj: TRegionObj) => {
     console.log(e, obj);
+    setRegionObj({
+      code: obj?.regionValObjArr?.map((item) => item?.adcode)?.join(',') || '',
+      index: obj?.regionValObjArr?.map((item) => item?.index)?.join(',') || '',
+      region: obj?.regionValObjArr?.map((item) => item?.name)?.join(',') || '',
+    });
   };
 
   return (
@@ -44,7 +54,9 @@ const UpdateUserInfo: FC = () => {
           <Form
             form={form}
             onFinish={async (values) => {
-              console.log(values);
+              if (router?.params?.formItem === 'local') {
+                values = { ...values, ...regionObj };
+              }
               const upUserRes = await uploadUser({
                 id: localUser.userInfo.id,
                 ...values,
@@ -165,31 +177,14 @@ const UpdateUserInfo: FC = () => {
                   </Field>
                 </>
               )}
-              {/* {router?.params?.formItem === 'local' &&
-                process.env.TARO_ENV === 'h5' && (
-                  <RegionPicker
-                    onReigonChange={onReigonChange}
-                    initialValues={[1, 2, 0]}
-                  />
-                )} */}
-              <RegionPicker
-                onReigonChange={onReigonChange}
-                initialValues={[1, 2, 0]}
-              />
-              {/* {router?.params?.formItem === 'local' &&
-                process.env.TARO_ENV === 'weapp' && (
-                  <Picker
-                    mode="region"
-                    value={['userGender']}
-                    onChange={onChangeRegion}
-                  >
-                    <AtListItem
-                      title="所在地"
-                      arrow="right"
-                      extraText={weappRegion}
-                    />
-                  </Picker>
-                )} */}
+              {router?.params?.formItem === 'local' && (
+                <RegionPicker
+                  onReigonChange={onReigonChange}
+                  initialValues={localUser?.userInfo?.index
+                    ?.split(',')
+                    ?.map((item) => +item)}
+                />
+              )}
             </View>
 
             <Button onClick={() => form?.submit()} className={styles.sumbitBtn}>

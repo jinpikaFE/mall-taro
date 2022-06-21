@@ -140,7 +140,7 @@ const UserInfo: Taro.FC = () => {
             <AtListItem
               title="所在地"
               arrow="right"
-              extraText={localUser?.userInfo?.province || ''}
+              extraText={localUser?.userInfo?.region || ''}
               onClick={() =>
                 Taro.navigateTo({
                   url: '/pages/My/UserInfo/UpdateUserInfo/index?formItem=local',

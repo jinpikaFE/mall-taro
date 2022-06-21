@@ -23,10 +23,12 @@ declare namespace NUser {
     avatarUrl?: string;
     gender?: string | number;
     nickName?: string;
-    province?: string;
-    country?: string;
-    city?: string;
     unionid?: string;
     openid?: string;
+
+    /** 省市区 */
+    code?: string;
+    index?: string;
+    region?: string;
   };
 }
