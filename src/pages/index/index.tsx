@@ -5,6 +5,7 @@ import { FC } from 'react';
 import DailyPoint from './components/dailyPoint';
 import ExcitingActivitie from './components/excitingActivitie';
 import HeaderSwiper from './components/headerSwiper';
+import ImportedBrand from './components/importedBrand';
 
 import styles from './index.module.less';
 
@@ -16,6 +17,7 @@ const Index: FC = () => {
           <HeaderSwiper />
           <ExcitingActivitie />
           <DailyPoint />
+          <ImportedBrand />
         </View>
       )}
     </Observer>
