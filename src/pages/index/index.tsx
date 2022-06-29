@@ -1,6 +1,8 @@
 import { View } from '@tarojs/components';
 import { Observer } from 'mobx-react';
 import { FC } from 'react';
+
+import DailyPoint from './components/dailyPoint';
 import ExcitingActivitie from './components/excitingActivitie';
 import HeaderSwiper from './components/headerSwiper';
 
@@ -13,6 +15,7 @@ const Index: FC = () => {
         <View className={styles.container}>
           <HeaderSwiper />
           <ExcitingActivitie />
+          <DailyPoint />
         </View>
       )}
     </Observer>
