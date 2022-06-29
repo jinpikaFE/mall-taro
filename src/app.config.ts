@@ -18,13 +18,13 @@ export default {
     selectedColor: '#1296db',
     list: [
       {
-        text: 'Blog',
+        text: '首页',
         pagePath: 'pages/index/index',
         iconPath: './assets/tab/home.png',
         selectedIconPath: './assets/tab/homeActive.png',
       },
       {
-        text: 'My',
+        text: '我的',
         pagePath: 'pages/My/index',
         iconPath: './assets/tab/my.png',
         selectedIconPath: './assets/tab/myActive.png',

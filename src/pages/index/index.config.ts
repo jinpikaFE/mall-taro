@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: 'Home'
+  navigationBarTitleText: '首页'
 }

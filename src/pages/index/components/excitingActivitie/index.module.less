@@ -1,0 +1,71 @@
+@import '~@/theme/index.less';
+
+.container {
+  .content {
+    display: flex;
+    color: #fff;
+    justify-content: space-between;
+    height: 197px * 2;
+  }
+  .left {
+    width: 40%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 25px * 2;
+    padding: 20px * 2;
+    position: relative;
+  }
+
+  .right {
+    width: 58%;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .topContent {
+    margin-bottom: 2%;
+  }
+
+  .topContent,
+  .bottomContent {
+    width: 100%;
+    height: 48%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 25px * 2;
+    padding: 20px * 2;
+  }
+
+  .cardBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .title {
+    position: absolute;
+    top: 10px * 2;
+    font-size: 16px * 2;
+  }
+
+  .desc {
+    position: absolute;
+    top: 33px * 2;
+    font-size: 14px * 2;
+  }
+
+  .go {
+    position: absolute;
+    background-color: transparent;
+    top: 55px * 2;
+    font-size: 12px * 2;
+    color: #fff;
+    width: 55px * 2;
+    height: 25px * 2;
+    line-height: 25px * 2;
+    font-style: italic;
+  }
+}
