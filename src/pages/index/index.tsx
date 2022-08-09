@@ -10,6 +10,8 @@ import ImportedBrand from './components/importedBrand';
 import styles from './index.module.less';
 
 const Index: FC = () => {
+  console.log('test');
+  
   return (
     <Observer>
       {() => (
