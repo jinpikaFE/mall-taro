@@ -16,6 +16,9 @@ export default {
   },
   tabBar: {
     selectedColor: '#1296db',
+    backgroundColor:'#fafafa',
+    color:'#8b8b8b',
+    borderStyle:'white',
     list: [
       {
         text: '首页',

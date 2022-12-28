@@ -5,10 +5,13 @@ import { AtCard } from 'taro-ui';
 import styles from './index.module.less';
 
 const ImportedBrand: FC = () => {
-
   return (
     <View className={styles.container}>
-      <AtCard title="进口大牌" className={styles.cardContent} isFull>
+      <AtCard
+        title="进口大牌"
+        className={styles.cardContent}
+        isFull
+      >
         <View className={`${styles.content} macy-container`}>
           <View className={styles.itemContent}>
             <Image

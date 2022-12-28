@@ -5,7 +5,11 @@
     display: flex;
     flex-wrap: wrap;
   }
-  
+
+  .cardContent {
+    background-color: @theme-color-table-header;
+  }
+
   .itemContent {
     width: 48%;
     border-radius: 20px * 2;
@@ -13,6 +17,7 @@
     border: 1px solid #d6e4ef;
     padding-bottom: 20px * 2;
     margin-bottom: 20px * 2;
+    background-color: @theme-color-white-bg;
 
     &:nth-child(odd) {
       margin-right: 4%;

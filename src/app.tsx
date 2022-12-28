@@ -1,3 +1,4 @@
+import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { useEffect } from 'react';
 
@@ -18,7 +19,7 @@ const App = (props) => {
   //   });
   // }, []);
 
-  return props.children;
+  return <View className='app'>{props.children}</View>;
 };
 
 export default App;
