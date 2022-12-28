@@ -29,8 +29,8 @@ export default {
       {
         text: '我的',
         pagePath: 'pages/My/index',
-        iconPath: './assets/tab/my.png',
-        selectedIconPath: './assets/tab/myActive.png',
+        iconPath: './assets/tab/user.png',
+        selectedIconPath: './assets/tab/userActive.png',
       },
     ],
   },
