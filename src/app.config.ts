@@ -6,6 +6,8 @@ export default {
     'pages/My/UserInfo/UpdateUserInfo/index',
     'pages/WebView/index',
     'pages/Login/index',
+    'pages/Category/index',
+    'pages/Cart/index',
   ],
   window: {
     backgroundColor: '#f5f5f5',
@@ -25,6 +27,18 @@ export default {
         pagePath: 'pages/index/index',
         iconPath: './assets/tab/home.png',
         selectedIconPath: './assets/tab/homeActive.png',
+      },
+      {
+        text: '分类',
+        pagePath: 'pages/Category/index',
+        iconPath: './assets/tab/category.png',
+        selectedIconPath: './assets/tab/categoryActive.png',
+      },
+      {
+        text: '购物车',
+        pagePath: 'pages/Cart/index',
+        iconPath: './assets/tab/cart.png',
+        selectedIconPath: './assets/tab/cartActive.png',
       },
       {
         text: '我的',
